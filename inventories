@@ -3,7 +3,11 @@ vitess-node01 ansible_host=192.168.44.102
 vitess-node02 ansible_host=192.168.44.103
 vitess-node03 ansible_host=192.168.44.104
 
+[etcd]
+vitess-node01
+vitess-node02
+vitess-node03
 
 [all:vars]
-ansible_ssh_user=vagrant
+ansible_user=vagrant
 ansible_ssh_pass=vagrant

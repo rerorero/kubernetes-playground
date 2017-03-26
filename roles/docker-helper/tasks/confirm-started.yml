@@ -1,0 +1,9 @@
+---
+- name: Wait {{ delay_sec }} for container start up..
+  pause: seconds={{ delay_sec }}
+  when: delay_sec is defined
+
+- name: Check if container started
+  command: "docker inspect -f '{{ '{{' }}.State.Running {{ '}}' }}' '{{ name }}'"
+  register: running
+  failed_when: running.stdout != 'true'

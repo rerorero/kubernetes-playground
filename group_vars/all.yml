@@ -1,0 +1,10 @@
+---
+resolved_ips:
+  192.168.44.101:
+    names: [vitess-mgr01]
+  192.168.44.102:
+    names: [vitess-node01]
+  192.168.44.103:
+    names: [vitess-node02]
+  192.168.44.104:
+    names: [vitess-node03]

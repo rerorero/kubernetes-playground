@@ -1,0 +1,64 @@
+---
+- name: Create etcd group
+  group:
+    name: etcd
+    gid: "{{ etcd_gid }}"
+    state: present
+  become: yes
+
+- name: Create etcd user
+  user:
+    name: docker
+    group: etcd
+    uid: "{{ etcd_uid }}"
+    state: present
+  become: yes
+
+- name: Create conf directory
+  file:
+    path: "{{ etcd_conf_dir }}"
+    owner: etcd
+    group: etcd
+    state: directory
+    mode: 0755
+  become: yes
+
+- name: Create data directory
+  file:
+    path: "{{ etcd_data_dir }}"
+    owner: etcd
+    group: etcd
+    state: directory
+    mode: 0755
+  become: yes
+
+- name: Create conf file
+  template:
+    src: etcd.yml.j2
+    dest: "{{ etcd_conf_dir }}/etcd.yml"
+    owner: etcd
+    group: etcd
+    mode: 0644
+  become: yes
+
+- name: Start etcd container
+  docker_container:
+    name: etcd
+    image: "{{ etcd_docker_image }}"
+    state: started
+    hostname: "{{ inventory_hostname }}"
+    network_mode: host
+    etc_hosts: "{{ docker_etc_hosts }}"
+    ports:
+      - "4001:4001"
+      - "2379:2379"
+      - "2380:2380"
+    volumes:
+      - "{{ etcd_conf_dir }}:/etc/etcd"
+      - "{{ etcd_data_dir }}:/etcd-data"
+    command: "/usr/local/bin/etcd --config-file /etc/etcd/etcd.yml"
+
+- include: roles/docker-helper/tasks/confirm-started.yml
+  vars:
+    name: etcd
+    delay_sec: 1
