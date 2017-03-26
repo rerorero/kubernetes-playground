@@ -62,6 +62,7 @@
   service: name=flanneld state=started enabled=yes
   become: yes
 
-# - name: Configure network
-#   command: etcdctl mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'
+- name: Finishe handlers force
+  meta: flush_handlers
 
+- include: configure-network.yml

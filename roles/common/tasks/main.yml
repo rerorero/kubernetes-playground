@@ -7,3 +7,9 @@
     group: root
     mode: 0644
   become: yes
+
+- name: Install jq
+  apt:
+    name: jq
+    state: present
+  become: yes

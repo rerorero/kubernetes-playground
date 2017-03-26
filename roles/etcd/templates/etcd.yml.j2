@@ -4,7 +4,7 @@
 name: {{ inventory_hostname }}
 
 # Path to the data directory.
-data-dir: /etcd-data
+data-dir: {{ etcd_data_dir }}
 
 # Path to the dedicated wal directory.
 wal-dir: # Number of committed transactions to trigger a snapshot to disk.

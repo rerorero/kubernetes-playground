@@ -2,7 +2,7 @@
 flannel_version: v0.7.0
 flannel_pkg_url: "https://github.com/coreos/flannel/releases/download/{{ flannel_version }}/flannel-{{ flannel_version }}-linux-amd64.tar.gz"
 flannel_subnet_dir: /run/flannel
-flannel_subnet_file: /run/flannel/subnet.env
+flannel_subnet_file: "{{ flannel_subnet_dir }}/subnet.env"
 flannel_bin_dir: /usr/local/bin
 flannel_uid: 3010
 flannel_gid: 3010

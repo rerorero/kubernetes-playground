@@ -1,6 +1,5 @@
 [Unit]
 Description=flanneld
-Wants=basic.target
 After=basic.target network.target
  
 {% set etcd_cluster = [] %}
@@ -9,6 +8,8 @@ After=basic.target network.target
 {% endfor %}
 
 [Service]
+# flanneld requires permission to open TUN devices.
+User=root
 Type=simple
 ExecStart={{ flannel_bin_dir }}/flanneld \
   -etcd-endpoints={{ etcd_cluster | join(',')}} \

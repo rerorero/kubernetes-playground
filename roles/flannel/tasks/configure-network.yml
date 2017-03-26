@@ -1,0 +1,27 @@
+---
+- name: Check network configured
+  shell: "curl -s http://{{ etcd_initial_cluster_hosts[0] }}:2379/v2/keys{{ etcd_network_conf_key }} | jq .node.value"
+  register: net_conf
+  failed_when: no
+
+- name: Create parameter json value
+  template:
+    src: network_value.json.j2
+    dest: "{{ flannel_subnet_dir }}/network_value.json"
+    owner: flannel
+    group: flannel
+    mode: 0644
+  become: yes
+
+- name: Configure flannel network
+  shell: "curl http://{{ etcd_initial_cluster_hosts[0] }}:2379/v2/keys{{ etcd_network_conf_key}} -XPUT --data-urlencode value@{{ flannel_subnet_dir }}/network_value.json"
+  when: (net_conf|failed) or (flannel_network not in net_conf.stdout)
+
+- name: Wait for flannel env file
+  wait_for:
+    path: "{{ flannel_subnet_file }}"
+    delay: 2
+    timeout: 20
+
+- name: Show flannel network config
+  debug: msg="{{ flannel_network }}"

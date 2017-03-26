@@ -1,7 +1,11 @@
 ---
-etcd_docker_image: "quay.io/coreos/etcd:v3.1.4"
+etcd_version: v3.1.4
+etcd_pkg_name: "etcd-{{ etcd_version }}-linux-amd64"
+etcd_package_url: "https://github.com/coreos/etcd/releases/download/{{ etcd_version }}/{{ etcd_pkg_name }}.tar.gz"
 etcd_conf_dir: /etc/etcd
+etcd_conf_file: "{{ etcd_conf_dir }}/etcd.yml"
 etcd_data_dir: /var/etcd-data
 etcd_cluster_token: etcd-cluster
+etcd_bin_dir: /usr/local/bin
 etcd_uid: 3002
 etcd_gid: 3002

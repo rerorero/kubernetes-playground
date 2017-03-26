@@ -1,4 +1,19 @@
 ---
+- name: Create docker group
+  group:
+    name: docker
+    gid: "{{ docker_gid }}"
+    state: present
+  become: yes
+
+- name: Create docker user
+  user:
+    name: docker
+    group: docker
+    uid: "{{ docker_uid }}"
+    state: present
+  become: yes
+
 - name: Install packages to allow apt to use a repository over HTTPS
   apt:
     name: "{{ item }}"

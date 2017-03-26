@@ -8,6 +8,12 @@ vitess-node01
 vitess-node02
 vitess-node03
 
+[docker-host]
+vitess-mgr01
+vitess-node01
+vitess-node02
+vitess-node03
+
 [all:vars]
 ansible_user=vagrant
 ansible_ssh_pass=vagrant

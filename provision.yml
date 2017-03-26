@@ -2,9 +2,11 @@
 - hosts: all
   roles:
     - common
-    - docker
 
 - hosts: etcd
   roles:
     - etcd
-    - flannel
+
+- hosts: docker-host
+  roles:
+    - flanneled-docker
