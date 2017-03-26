@@ -7,3 +7,4 @@
 - hosts: etcd
   roles:
     - etcd
+    - flannel

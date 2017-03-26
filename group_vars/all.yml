@@ -8,3 +8,6 @@ resolved_ips:
     names: [vitess-node02]
   192.168.44.104:
     names: [vitess-node03]
+
+etcd_initial_cluster_hosts: "{{ groups['etcd'] }}"
+systemd_service_dir: "/lib/systemd/system"
