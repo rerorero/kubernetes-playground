@@ -8,8 +8,10 @@ vitess-node01
 vitess-node02
 vitess-node03
 
-[docker-host]
+[kube-master]
 vitess-mgr01
+
+[kube-node]
 vitess-node01
 vitess-node02
 vitess-node03

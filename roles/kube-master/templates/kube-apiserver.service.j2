@@ -1,0 +1,27 @@
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://github.com/kubernetes/kubernetes
+Wants=network-online.target
+After=network.target network-online.target
+After=flanneld.service
+
+[Service]
+EnvironmentFile=-{{ kube_common_conf_path }}
+EnvironmentFile=-{{ kube_conf_dir }}/apiserver.conf
+User=kube
+ExecStart={{ kube_bin_dir }}/kube-apiserver \
+  $KUBE_LOGTOSTDERR \
+  $KUBE_LOG_LEVEL \
+  $KUBE_ETCD_SERVERS \
+  $KUBE_API_ADDRESS \
+  $KUBE_API_PORT \
+  $KUBE_ALLOW_PRIV \
+  $KUBE_SERVICE_ADDRESSES \
+  $KUBE_ADMISSION_CONTROL \
+  $KUBELET_HTTPS
+Restart=on-failure
+Type=notify
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -7,6 +7,10 @@
   roles:
     - etcd
 
-- hosts: docker-host
+- hosts: kube-master
   roles:
-    - flanneled-docker
+    - kube-master
+
+- hosts: kube-node
+  roles:
+    - kube-node

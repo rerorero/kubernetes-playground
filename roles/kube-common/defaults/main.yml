@@ -1,0 +1,19 @@
+---
+kube_version: v1.5.5
+kube_uid: 3030
+kube_gid: 3030
+
+kube_client_pkg_url: "https://storage.googleapis.com/kubernetes-release/release/{{ k8s_version }}/kubernetes-client-linux-amd64.tar.gz"
+kube_server_pkg_url: "https://storage.googleapis.com/kubernetes-release/release/{{ k8s_version }}/kubernetes-server-linux-amd64.tar.gz"
+kube_pkg_dir: "/opt/kube-{{ kube_version }}"
+kube_bin_dir: /usr/local/bin
+kube_conf_dir: /etc/kubernetes
+kube_common_conf_path: "{{ kube_conf_dir }}/config"
+
+kube_master_api_port: 8080
+kube_master_host: "{{ groups['k8s_master'][0] }}"
+# Kubernetes internal network for services.
+# Kubernetes services will get fake IP addresses from this range.
+# This range must not conflict with anything in your infrastructure. These
+# addresses do not need to be routable and must just be an unused block of space.
+kube_service_addresses: 10.254.0.0/16

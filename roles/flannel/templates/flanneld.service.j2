@@ -8,8 +8,6 @@ After=basic.target network.target
 {% endfor %}
 
 [Service]
-# flanneld requires permission to open TUN devices.
-User=root
 Type=simple
 ExecStart={{ flannel_bin_dir }}/flanneld \
   -etcd-endpoints={{ etcd_cluster | join(',')}} \

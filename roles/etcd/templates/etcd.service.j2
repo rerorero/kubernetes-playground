@@ -5,11 +5,10 @@ After=network.target
  
 [Service]
 User=etcd
-Type=notify
+Type=simple
 ExecStart={{ etcd_bin_dir }}/etcd --config-file {{ etcd_conf_file }}
-Restart=always
-RestartSec=10s
-LimitNOFILE=40000
+Restart=on-failure
+LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target

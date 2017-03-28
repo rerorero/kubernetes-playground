@@ -8,8 +8,6 @@
   template:
     src: network_value.json.j2
     dest: "{{ flannel_subnet_dir }}/network_value.json"
-    owner: flannel
-    group: flannel
     mode: 0644
   become: yes
 

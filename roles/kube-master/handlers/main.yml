@@ -1,0 +1,20 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  become: yes
+
+- name: Restart kube-apiserver
+  service: name=kube-apiserver state=restarted
+  become: yes
+
+- name: Restart kube-controller-manager
+  service: name=kube-controller-manager state=restarted
+  become: yes
+
+- name: Restart kube-scheduler
+  service: name=kube-scheduler state=restarted
+  become: yes
+
+- name: Restart iptables
+  service: name=iptables state=restarted
+  become: yes

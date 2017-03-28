@@ -1,0 +1,27 @@
+###
+# kubernetes system config
+# https://kubernetes.io/docs/admin/kube-apiserver/
+#
+# The following values are used to configure the kube-apiserver
+#
+
+# The address on the local server to listen to.
+KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0 --bind-address=0.0.0.0"
+
+# The port on the local server to listen on.
+KUBE_API_PORT="--secure-port=0"
+
+# Address range to use for services
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ kube_service_addresses }}"
+
+# Location of the etcd cluster
+{% set clusters = [] %}
+{% for cluster_host in etcd_initial_cluster_hosts %}
+{% set _ = clusters.append(cluster_host + '=http://' + cluster_host + ':2380') %}
+{% endfor %}
+KUBE_ETCD_SERVERS="--etcd-servers={{ clusters | join(',') }}
+
+# default admission control policies
+KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota"
+
+KUBELET_HTTPS="--kubelet-https=false"

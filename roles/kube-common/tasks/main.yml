@@ -1,0 +1,18 @@
+---
+- name: Download packages
+  unarchive:
+    src: "{{ kube_client_pkg_url }}"
+    dest: "{{ kube_pkg_dir }}"
+    mode: 0755
+    remote_src: True
+  become: yes
+  with_items:
+    - "{{ kube_client_pkg_url }}"
+    - "{{ kube_server_pkg_url }}"
+
+- name: Set common system config
+  template:
+    src: config.j2
+    dest: "{{ kube_common_conf_path }}"
+
+  become: yes

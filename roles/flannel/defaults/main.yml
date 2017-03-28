@@ -4,7 +4,5 @@ flannel_pkg_url: "https://github.com/coreos/flannel/releases/download/{{ flannel
 flannel_subnet_dir: /run/flannel
 flannel_subnet_file: "{{ flannel_subnet_dir }}/subnet.env"
 flannel_bin_dir: /usr/local/bin
-flannel_uid: 3010
-flannel_gid: 3010
 # only for vagrant
 flannel_iface: "{{ ansible_host }}"

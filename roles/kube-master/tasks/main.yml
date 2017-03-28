@@ -1,0 +1,16 @@
+---
+- name: Create links of bins
+  file:
+    src: "{{ kube_pkg_dir }}/server/{{ item }}"
+    path: "{{ kube_bin_dir }}/{{ item }}"
+    state: link
+  with_items:
+    - kube-apiserver
+    - kube-controll-manager
+    - kube-scheduler
+    - kubectl
+  become: yes
+
+- include: kube-apiserver.yml
+- include: kube-controller-manager.yml
+- include: kube-scheduler.yml

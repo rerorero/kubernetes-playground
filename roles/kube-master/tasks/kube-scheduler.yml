@@ -1,0 +1,13 @@
+---
+- name: Setup kube-scheduler service
+  template:
+    src: kube-scheduler.service.j2
+    dest: "{{ systemd_service_dir }}/kube-scheduler.service"
+  become: yes
+  notify:
+    - Reload systemd
+    - Restart kube-scheduler
+
+- name: Enable kube-scheduler
+  service: name=kube-scheduler state=started enabled=yes
+  become: yes

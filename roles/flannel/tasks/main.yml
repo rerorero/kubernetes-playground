@@ -1,24 +1,8 @@
 ---
-- name: Create flannel group
-  group:
-    name: flannel
-    gid: "{{ flannel_gid }}"
-    state: present
-  become: yes
-
-- name: Create flannel user
-  user:
-    name: flannel
-    group: flannel
-    uid: "{{ flannel_uid }}"
-    state: present
-  become: yes
 
 - name: Create flannel directories
   file:
     path: "{{ item }}"
-    owner: flannel
-    group: flannel
     state: directory
     mode: 0755
   with_items:
@@ -30,8 +14,6 @@
   unarchive:
     src: "{{ flannel_pkg_url }}"
     dest: "/opt/flannel-{{ flannel_version }}"
-    owner: flannel
-    group: flannel
     mode: 0755
     remote_src: True
   become: yes
@@ -50,8 +32,6 @@
   template:
     src: flanneld.service.j2
     dest: "{{ systemd_service_dir }}/flanneld.service"
-    owner: root
-    group: root
     mode: 0755
   become: yes
   notify:
