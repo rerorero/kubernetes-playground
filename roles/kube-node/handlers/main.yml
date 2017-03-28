@@ -1,0 +1,12 @@
+---
+- name: Reload systemd
+  command: systemctl daemon-reload
+  become: yes
+
+- name: Restart kubelet
+  service: name=kubelet state=restarted
+  become: yes
+
+- name: Restart kube-proxy
+  service: name=kube-proxy state=restarted
+  become: yes

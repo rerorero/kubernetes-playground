@@ -14,7 +14,3 @@
 - name: Restart kube-scheduler
   service: name=kube-scheduler state=restarted
   become: yes
-
-- name: Restart iptables
-  service: name=iptables state=restarted
-  become: yes

@@ -1,18 +1,54 @@
 ---
-- name: Download packages
-  unarchive:
-    src: "{{ kube_client_pkg_url }}"
-    dest: "{{ kube_pkg_dir }}"
-    mode: 0755
-    remote_src: True
+- name: Create kube group
+  group:
+    name: kube
+    gid: "{{ kube_gid }}"
+    state: present
   become: yes
+
+- name: Create kube user
+  user:
+    name: kube
+    group: kube
+    uid: "{{ kube_uid }}"
+    state: present
+  become: yes
+
+- name: Create common directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: kube
+    group: kube
   with_items:
-    - "{{ kube_client_pkg_url }}"
-    - "{{ kube_server_pkg_url }}"
+    - "{{ kube_pkg_dir }}"
+    - "{{ kube_conf_dir }}"
+  become: yes
+
+- name: Check if packages has been donwloaded
+  stat: path="{{ kube_pkg_dir }}/kubernetes"
+  register: pkg_stat
+  become: yes
+
+- block:
+  - name: Download packages if not exists
+    unarchive:
+      src: "{{ item }}"
+      dest: "{{ kube_pkg_dir }}"
+      mode: 0755
+      owner: kube
+      group: kube
+      remote_src: True
+    become: yes
+    with_items:
+      - "{{ kube_client_pkg_url }}"
+      - "{{ kube_server_pkg_url }}"
+
+  when: pkg_stat.stat.isdir is not defined
 
 - name: Set common system config
   template:
     src: config.j2
     dest: "{{ kube_common_conf_path }}"
-
   become: yes

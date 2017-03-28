@@ -8,11 +8,9 @@
   - name: Open apiserver port with iptables
     command: /sbin/iptables -I INPUT 1 -p tcp --dport {{ kube_master_api_port }} -j ACCEPT -m comment --comment "kube-apiserver"
     become: yes
-    notify:
-      - Restart iptables
 
   - name: Save iptables rules
-    command: service iptables save
+    command: invoke-rc.d netfilter-persistent save
     become: yes
 
-  when: 'kube-apiserver' not in iptablesrules.stdout
+  when: "'kube-apiserver' not in iptablesrules.stdout"

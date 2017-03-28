@@ -1,0 +1,22 @@
+---
+- name: Create links of server bins
+  file:
+    src: "{{ kube_pkg_dir }}/kubernetes/server/bin/{{ item }}"
+    path: "{{ kube_bin_dir }}/{{ item }}"
+    state: link
+  with_items:
+    - kubelet
+    - kube-proxy
+  become: yes
+
+- name: Create links of client bins
+  file:
+    src: "{{ kube_pkg_dir }}/kubernetes/client/bin/{{ item }}"
+    path: "{{ kube_bin_dir }}/{{ item }}"
+    state: link
+  with_items:
+    - kubectl
+  become: yes
+
+- include: kubelet.yml
+- include: kube-proxy.yml

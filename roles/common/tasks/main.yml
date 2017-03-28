@@ -8,8 +8,11 @@
     mode: 0644
   become: yes
 
-- name: Install jq
+- name: Install utilities
   apt:
-    name: jq
+    name: "{{ item }}"
     state: present
   become: yes
+  with_items:
+    - jq
+    - iptables-persistent

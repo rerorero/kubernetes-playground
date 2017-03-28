@@ -17,9 +17,9 @@ KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ kube_service_addresses }}"
 # Location of the etcd cluster
 {% set clusters = [] %}
 {% for cluster_host in etcd_initial_cluster_hosts %}
-{% set _ = clusters.append(cluster_host + '=http://' + cluster_host + ':2380') %}
+{% set _ = clusters.append('http://' + cluster_host + ':2379') %}
 {% endfor %}
-KUBE_ETCD_SERVERS="--etcd-servers={{ clusters | join(',') }}
+KUBE_ETCD_SERVERS="--etcd-servers={{ clusters | join(',') }}"
 
 # default admission control policies
 KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota"

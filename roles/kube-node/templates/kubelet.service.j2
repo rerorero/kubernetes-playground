@@ -1,0 +1,25 @@
+[Unit]
+Description=Kubernetes Kubelet Server
+Documentation=https://github.com/kubernetes/kubernetes
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory={{ kubelet_working_dir }}
+EnvironmentFile=-{{ kube_common_conf_path }}
+
+# TODO: required dns
+# --cluster-dns=
+# --cluster-domain=
+ExecStart={{ kube_bin_dir }}/kubelet \
+  $KUBE_LOGTOSTDERR \
+  $KUBE_LOG_LEVEL \
+  --api-servers={{ kube_api_endpoint }} \
+  --address=0.0.0.0 \
+  --hostname-override={{ inventory_hostname }}
+  --config={{ kube_manifest_dir }}
+Restart=on-failure
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

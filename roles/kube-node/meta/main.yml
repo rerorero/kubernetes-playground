@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: flanneled-docker }
+  - { role: kube-common }

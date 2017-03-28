@@ -1,0 +1,27 @@
+---
+- name: Create the kubelet working directory
+  file:
+    path: "{{ kubelet_working_dir }}"
+    state: directory
+    mode: 0755
+  become: yes
+
+- name: Make sure manifest directory exists
+  file:
+    path: "{{ kube_manifest_dir }}"
+    state: directory
+    mode: 0755
+  become: yes
+
+- name: Setup kubelet service
+  template:
+    src: kubelet.service.j2
+    dest: "{{ systemd_service_dir }}/kubelet.service"
+  become: yes
+  notify:
+    - Reload systemd
+    - Restart kubelet
+
+- name: Enable kubelet
+  service: name=kubelet state=started enabled=yes
+  become: yes
