@@ -8,6 +8,7 @@ KUBELET_ADDRESS="--address=0.0.0.0"
 KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
 
 # location of the api-server
+# TODO: deprecated
 KUBELET_API_SERVER="--api-servers={{ kube_api_endpoint }}"
 
 KUBELET_ARGS="{{ kubelet_options|join(' ') }}"

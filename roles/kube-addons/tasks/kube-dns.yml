@@ -1,32 +1,18 @@
 ---
-- name: Put kube-dns svc yml files
+- name: Put kube-dns resouce files
   template:
-    src: dns/kube-dns-svc.yml.j2
-    dest: "{{ kube_manifest_dir }}/kube-dns-svc.yml"
+    src: "dns/{{ item }}.j2"
+    dest: "{{ kube_manifest_dir }}/{{ item }}"
     owner: kube
     group: kube
   become: yes
-  # TODO: replace by kubectl module
-  # notify: 
-  #   - Apply kube-dns 
-  #
-- name: Put kube-dns deploy yml files
-  template:
-    src: dns/kube-dns-controller.yml.j2
-    dest: "{{ kube_manifest_dir }}/kube-dns-controller.yml"
-    owner: kube
-    group: kube
-  become: yes
-  # TODO: replace by kubectl module
-  # notify: 
-  #   - Apply kube-dns 
+  with_items: "{{ kube_addons_dns_resources }}"
+  notify: Update dns resources
 
   # TODO: replace by kubectl module
-- name: Apply kube-dns svc
-  command: "kubectl create -f {{ kube_manifest_dir }}/kube-dns-svc.yml"
+- name: Present kube-dns resources
+  kubectl:
+    action: present
+    filepath: "{{ kube_manifest_dir }}/{{ item }}"
   become: yes
-
-  # TODO: replace by kubectl module
-- name: Apply kube-dns deploy
-  command: "kubectl create -f {{ kube_manifest_dir }}/kube-dns-controller.yml"
-  become: yes
+  with_items: "{{ kube_addons_dns_resources }}"

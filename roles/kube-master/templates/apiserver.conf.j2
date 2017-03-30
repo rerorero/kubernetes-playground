@@ -22,6 +22,6 @@ KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ kube_service_addresses }}"
 KUBE_ETCD_SERVERS="--etcd-servers={{ clusters | join(',') }}"
 
 # default admission control policies
-KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota"
+KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,NamespaceExists,ServiceAccount,LimitRanger,ResourceQuota"
 
-KUBELET_HTTPS="--kubelet-https=false"
+KUBELET_HTTPS="--kubelet-https=true"

@@ -1,6 +1,5 @@
 ---
 kubelet_working_dir: /var/lib/kubelet
 kubelet_options:
-  - "--config={{ kube_manifest_dir }}"
   - "--cluster-dns={{ kube_dns_ip }}"
   - "--cluster-domain={{ kube_dns_domain }}"

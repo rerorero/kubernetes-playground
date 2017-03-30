@@ -1,0 +1,7 @@
+---
+- name: Update dns resources
+  kubectl:
+    action: apply
+    filepath: "{{ kube_manifest_dir }}/{{ item }}"
+  become: yes
+  with_items: "{{ kube_addons_dns_resources }}"

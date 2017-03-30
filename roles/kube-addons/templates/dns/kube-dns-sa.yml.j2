@@ -1,0 +1,8 @@
+# Original from https://github.com/kubernetes/kubernetes/blob/v1.6.0/cluster/addons/dns/kubedns-sa.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-dns
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
