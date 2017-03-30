@@ -6,9 +6,9 @@ Documentation=https://github.com/kubernetes/kubernetes
 EnvironmentFile=-{{ kube_common_conf_path }}
 User=kube
 ExecStart={{ kube_bin_dir }}/kube-scheduler \
-	    $KUBE_LOGTOSTDERR \
-	    $KUBE_LOG_LEVEL \
-	    $KUBE_MASTER
+  $KUBE_LOGTOSTDERR \
+  $KUBE_LOG_LEVEL \
+  $KUBE_MASTER
 Restart=on-failure
 LimitNOFILE=65536
 

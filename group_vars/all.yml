@@ -15,3 +15,17 @@ etcd_initial_cluster_hosts: "{{ groups['etcd'] }}"
 etcd_network_conf_key: /coreos.com/network/config 
 
 flannel_network: "10.9.0.0/16"
+
+kube_version: v1.6.0
+kube_conf_dir: /etc/kubernetes
+kube_manifest_dir: "{{ kube_conf_dir }}/manifests"
+kube_master_api_port: 8080
+kube_master_host: "{{ groups['kube-master'][0] }}"
+kube_api_endpoint: "http://{{ kube_master_host }}:{{ kube_master_api_port }}"
+# Kubernetes internal network for services.
+# Kubernetes services will get fake IP addresses from this range.
+# This range must not conflict with anything in your infrastructure. These
+# addresses do not need to be routable and must just be an unused block of space.
+kube_service_addresses: 10.254.0.0/16
+kube_dns_ip: 10.254.254.254
+kube_dns_domain: cluster.vitess

@@ -6,12 +6,12 @@
     mode: 0755
   become: yes
 
-- name: Make sure manifest directory exists
-  file:
-    path: "{{ kube_manifest_dir }}"
-    state: directory
-    mode: 0755
+- name: Put kube-apiserver config file
+  template:
+    src: kubelet.conf.j2
+    dest: "{{ kube_conf_dir }}/kubelet.conf"
   become: yes
+  notify: Restart kubelet
 
 - name: Setup kubelet service
   template:

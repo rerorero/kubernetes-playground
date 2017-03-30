@@ -24,6 +24,7 @@
   with_items:
     - "{{ kube_pkg_dir }}"
     - "{{ kube_conf_dir }}"
+    - "{{ kube_manifest_dir }}"
   become: yes
 
 - name: Check if packages has been donwloaded

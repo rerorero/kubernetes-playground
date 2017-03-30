@@ -1,0 +1,3 @@
+---
+- include: kube-dns.yml
+  run_once: true
