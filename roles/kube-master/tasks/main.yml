@@ -11,6 +11,15 @@
     - kubectl
   become: yes
 
+- name: Put key file
+  copy:
+    src: server.key
+    dest: "{{ kube_cert_dir }}/server.key"
+    group: kube
+    owner: kube
+    mode: 0440
+  become: yes
+
 - include: kube-apiserver.yml
 - include: kube-controller-manager.yml
 - include: kube-scheduler.yml

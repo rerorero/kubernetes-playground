@@ -1,7 +1,5 @@
 ---
 kube_addons_dns_resources:
-  - kube-dns-svc.yml
   - kube-dns-sa.yml
-  - kube-dns-secret.yml
-  - kube-dns-configmap.yml
+  - kube-dns-svc.yml
   - kube-dns-controller.yml

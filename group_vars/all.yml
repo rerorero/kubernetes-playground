@@ -18,6 +18,7 @@ flannel_network: "10.9.0.0/16"
 
 kube_version: v1.6.0
 kube_conf_dir: /etc/kubernetes
+kube_cert_dir: "{{ kube_conf_dir }}/certs"
 kube_manifest_dir: "{{ kube_conf_dir }}/manifests"
 kube_master_api_port: 8080
 kube_master_host: "{{ groups['kube-master'][0] }}"
@@ -27,5 +28,6 @@ kube_api_endpoint: "http://{{ kube_master_host }}:{{ kube_master_api_port }}"
 # This range must not conflict with anything in your infrastructure. These
 # addresses do not need to be routable and must just be an unused block of space.
 kube_service_addresses: 10.254.0.0/16
+kube_service_api_ip: 10.254.0.1
 kube_dns_ip: 10.254.254.254
-kube_dns_domain: cluster.vitess
+kube_dns_domain: cluster.local
